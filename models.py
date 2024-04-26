@@ -18,4 +18,8 @@ class Post(base):
     created_at=Column(TIMESTAMP(timezone=True),nullable=False,server_default=text("now()"))
     owner_id=Column(INTEGER,ForeignKey("users.id",ondelete="CASCADE"),nullable=False)
     owner=relationship(users)
+class vote(base):
+   __tablename__="votes"
+   post_id=Column(INTEGER,ForeignKey("post.id",ondelete="CASCADE"),primary_key=True)
+   user_id=Column(INTEGER,ForeignKey("users.id",ondelete="CASCADE"),primary_key=True)
     

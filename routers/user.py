@@ -5,6 +5,7 @@ from database import get_db
 import models
 import utils
 import auth
+from sqlalchemy import func
 from jose import jwt
 import auth
 router_user=APIRouter(tags=["user"])
@@ -29,4 +30,24 @@ def sign_in(data:schemas.usersign_in,db:Session =Depends(get_db)):
 def getall(db:Session =Depends(get_db),data:dict =Depends(auth.verify_the_token)):
         user_data=db.query(models.users).all()
         return user_data
+@router_user.put("/update_user_name")
+def update_user(upn:schemas.update_user_username,db:Session =Depends(get_db),data:dict=Depends(auth.verify_the_token)):
+    if data["user_name"]:
+    
+        user_details=db.query(models.users).filter(models.users.user_name==data["user_name"]).first()
+        user_details.user_name=upn.user_name
+        db.commit()
+        return {"message":"updated"}
+    else:
+        return data
+@router_user.put("/update_user_email")
+def update_user(upn:schemas.update_user_email,db:Session =Depends(get_db),data:dict=Depends(auth.verify_the_token)):
+    if data["user_name"]:
+    
+        user_details=db.query(models.users).filter(models.users.user_name==data["user_name"]).first()
+        user_details.email=upn.email
+        db.commit()
+        return {"message":"updated"}
+    else:
+        return data
 
