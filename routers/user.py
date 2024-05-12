@@ -24,7 +24,7 @@ def create_user(user:schemas.user_create,db:Session =Depends(get_db)):
     db.commit()
     token=auth.create_acess_token(data={"user_pass":user.Password,"user_name":user.user_name})
     data={"gmail":user.email,
-"subject":"congralutation!",
+"subject":"congrats!",
 "body_of_email":"your acount has been created"}
     send_email(data)
     return {"created":user.user_name,"token":token,"token_type": "bearer"}
