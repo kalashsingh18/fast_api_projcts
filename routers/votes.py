@@ -4,7 +4,7 @@ from auth import verify_the_token
 from sqlalchemy.orm import Session
 import models
 from schemas import votes
-router_votes=APIRouter()
+router_votes=APIRouter(tags=["Do votes to the post "])
 @router_votes.post("/vote")
 def votes(data:votes,db :Session =Depends(get_db),current_user: dict =Depends(verify_the_token)):
     

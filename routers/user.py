@@ -31,7 +31,7 @@ def create_user(user:schemas.user_create,db:Session =Depends(get_db)):
 @router_user.post("/sign_in")
 def sign_in(data:schemas.usersign_in,db:Session =Depends(get_db)):
     
-    checkuser=db.query(models.user).filter(models.user.user_name==data.user_name).first()
+    checkuser=db.query(models.users).filter(models.users.user_name==data.user_name).first()
     constraints=utils.verify(data.Password,checkuser.Password)
     if constraints:
         token=auth.create_acess_token(data={"user_pass":data.Password,"user_name":data.user_name})
