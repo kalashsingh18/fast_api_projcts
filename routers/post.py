@@ -10,6 +10,7 @@ from database import get_db
 router_post=APIRouter(tags=["post_APIS"])
 @router_post.post("/create_post")
 def create_post(post:schemas.Post,db:Session=Depends(get_db),data:dict =Depends(auth.verify_the_token)):
+    print("data",dict(data))
     user_data=db.query(models.users).filter(models.users.user_name==data["user_name"]).first()
     
     post=dict(post)

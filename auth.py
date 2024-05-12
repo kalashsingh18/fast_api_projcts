@@ -18,12 +18,14 @@ def create_acess_token(data:dict):
     return encoded_jwt
 def verify_the_token(token: str = Depends(auth.oauth2_scheme),db:Session =Depends(get_db)):
     payload=jwt.decode(token,auth.SECRET_KEY,algorithms=[auth.ALGORITHM])
+    print("check:",payload)
     check=db.query(models.users).filter(models.users.user_name==payload["user_name"]).first()
-    print(check)
-    if check!=None:
-         checks=payload["user_pass"]==check.Password
-    else:
-        checks =False
+    
+    print("check:",check)
+    checks=payload["user_pass"]==check.Password
+    
+
+    print(checks)
     if checks:
         return payload
     else:
