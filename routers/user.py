@@ -37,7 +37,7 @@ def sign_in(data:schemas.usersign_in,db:Session =Depends(get_db)):
         token=auth.create_acess_token(data={"user_pass":data.Password,"user_name":data.user_name})
         return {"created":data.user_name,"token":token,"token_type": "bearer"}
 @router_user.get("/get_info_user")
-def getall(db:Session =Depends(get_db),data:dict =Depends(auth.verify_the_token)):
+def getall(db:Session =Depends(get_db)):#data:dict =Depends(auth.verify_the_token))
         user_data=db.query(models.users).all()
         return user_data
 @router_user.put("/update_user_name")

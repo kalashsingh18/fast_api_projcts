@@ -5,8 +5,12 @@ from routers.post import router_post
 from routers.votes import router_votes
 import models
 from fastapi.middleware.cors import CORSMiddleware
+import database
 app=FastAPI()
      # Add the frontend URL
+@app.get("/")
+def get():
+    return {"get"}
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,7 +22,8 @@ app.add_middleware(
 
 
 get_db()
-models.base.metadata.create_all(bind=engine)
+models.base.metadata.create_all(bind=database.engine)
+
 app.include_router(router_user)
 app.include_router(router_post)
 app.include_router(router_votes)
